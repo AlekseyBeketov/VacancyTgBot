@@ -8,6 +8,8 @@ import sqlite3
 from telebot import types
 from datetime import datetime, timedelta
 
+bot = telebot.TeleBot('test')
+
 admin_id = 964423991
 
 
