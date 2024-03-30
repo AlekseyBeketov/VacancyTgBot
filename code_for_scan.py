@@ -14,7 +14,7 @@ admin_id = 964423991
 
 
 @bot.message_handler(commands=['employka'])
-def startDbEmployee(message):
+def startDbEmployee():
     conn = sqlite3.connect('bot_db.sql')
     cur = conn.cursor()
     cur.execute('create table if not exists users (id int primary key, name varchar(30), area_1 int, area_2 int, area_3 int, '
@@ -26,7 +26,7 @@ def startDbEmployee(message):
     conn.close()
 
 @bot.message_handler(commands=['asd'])
-def gg(message):
+def gg():
     conn = sqlite3.connect('bot_db.sql')
     cur = conn.cursor()
     cur.execute('delete from workers')
@@ -67,8 +67,6 @@ def on_click(message):
         conn = sqlite3.connect('bot_db.sql')
         cur = conn.cursor()
         cur.execute("SELECT * FROM user_ads")
-        data = cur.fetchall()
-
         cur.close()
         conn.close()
         employee_name(message)
@@ -455,10 +453,6 @@ def emp_info(message):
     markup.row(btn1)
     markup.row(btn2)
 
-    sent_message=bot.send_message(message.chat.id, f'{emp_name}, твоя анкета готова! 📋\n\n'
-                                      f'Выбранные области:\n{formatted_areas}'
-                                      f'\nЗанятость: {zanatost}'
-                                      f'\nЖелаемая длительность: {dlitelnost}', reply_markup=markup)
 
 @bot.message_handler(func=lambda message: message.text == 'Искать объявления 💼')
 def final_check_user(message):
@@ -485,7 +479,6 @@ def notification_mode(user_id):
     # Получение объявлений пользователя из представления
     ads = cur.execute("SELECT ad_text FROM user_ads").fetchall()
     #cur.execute("SELECT * FROM user_ads")
-    data = cur.fetchall()
     for ad in ads:
         ad_text = ad[0]
         #bot.send_message(user_id,f'{ad_text}')
@@ -511,12 +504,12 @@ def send_ad_to_user(user_id, ad_text):
 
 def delete_old_records():
     conn = sqlite3.connect('bot_db.sql')
-    cur = conn.cursor()
+    #cur = conn.cursor()
 
     current_datetime = datetime.now()
     #print(datetime.now())
     #two_weeks_ago = current_datetime - timedelta(weeks=2)
-    two_weeks_ago = current_datetime - timedelta(seconds=30)
+    #two_weeks_ago = current_datetime - timedelta(seconds=30)
 
     #cur.execute("DELETE FROM workers WHERE date_of_create < DATE_SUB(NOW(), INTERVAL 3 MINUTE)")
 
